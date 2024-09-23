@@ -1,13 +1,22 @@
 # Aprendendo-Python-CPS
 📝️ Minhas anotações do curso "Aprendendo Python" do Cento Paula Souza.
+-
 ⚖️ O curso é livre para todos, incluindo um certificado no final.
+-
 📑️ Etapas:
+-
   Introdução
+  -
   Classes e Objetos
-  Comandos de saída e entrada
+  -
+  Comandos de saída e entrada-
+  -
   Comando condicional
+  -
   Comandos de repetição
+  -
   Tratamento de exceções
+  -
   Objetos compostos de Python (Objetos sequenciais)
   -
   O curso possui um teste a cada etapa, incluindo um teste geral no final.
