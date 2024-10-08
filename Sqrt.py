@@ -1,15 +1,14 @@
+print("Raíz quadrada pelo método de Newton.")
 def main():
-    print("Raíz quadrada pelo método de Newton.")
     n = float(input("Digite um número:"))
-    guess = 1
-    def root():
-        global r
-        r = 1 / 2*((n * guess) + guess)
-        if guess == r:
-            print(r)
-        else:
+    def Sqrt(a):
+        guess = a
+        r = 1
+        while guess != r:
             guess = r
-            root()
-        root()
+            r = ((a / guess) + guess)/2
+        else:
+            return round(r, 2)
+    print(Sqrt(n))
     main()
 main()
