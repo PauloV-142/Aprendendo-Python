@@ -13,6 +13,8 @@ def main():
             l = normalize(a / n)
             if type(l) == int: #4 / 2
                 p = False
+            if p == False:
+                return p
         else:
             return p
     print(pr(int(input("Digite um número: "))))
