@@ -1,11 +1,11 @@
 def main():
-    n = input("Insira um número Inteiro: ")
+    n = int(input("Insira um número Inteiro: "))
     def b(a):
         global n
         n = a
         if n != 1:
             n //= 2
-            r = n % 3
+            r = n % 2
             print(n, r)
             b(n)
     b(n)
