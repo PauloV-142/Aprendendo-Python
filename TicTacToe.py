@@ -9,6 +9,7 @@ l8 = 0
 
 lugares = ["N", "N", "N", "N", "N", "N", "N", "N", "N"]
 ocupados = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
+jogador = 1
 def MudarJogador(): # Alterna entre X ou O
     global jogador
     if jogador == 1:
@@ -27,14 +28,16 @@ def xo(): # X ou O dependendo do jogador.
 def local():
     local = int(input(f"Digite um número ({ocupados}): "))
     return local
-jogador = 1
+def tabuleiro():
+    print(f"{lugares[0]} | {lugares[1]} | {lugares[2]}\n-- --- --\n{lugares[3]} | {lugares[4]} | {lugares[5]}\n-- --- --\n{lugares[6]} | {lugares[7]} | {lugares[8]}")
 while ocupados != []:
     try:
-        l = local()
-        lugares[l - 1] = xo()
-        MudarJogador()
-        l = str(l)
+        l = str(local())
         ocupados.pop(ocupados.index(l))
+        l = int(l)
+        lugares[l - 1] = xo()
     except Exception as e:
         print(e)
-print(lugares)
+    else:
+        MudarJogador()
+        tabuleiro()
