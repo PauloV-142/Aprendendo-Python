@@ -17,8 +17,6 @@ def MudarJogador(): # Alterna entre X ou O
     else:
         jogador = 1
     
-    
-
 def xo(): # X ou O dependendo do jogador.
     global jogador
     if jogador == 1:
@@ -39,5 +37,80 @@ while ocupados != []:
     except Exception as e:
         print(e)
     else:
+        match l:
+            case 1:
+                if xo() == "X":
+                    l1 += 1
+                    l4 += 1
+                    l7 += 1
+                else:
+                    l1 -= 1
+                    l4 -= 1
+                    l7 -= 1
+            case 2:
+                if xo() == "X":
+                    l1 += 1
+                    l5 += 1
+                else:
+                    l1 -= 1
+                    l5 -= 1
+            case 3:
+                if xo() == "X":
+                    l1 += 1
+                    l6 += 1
+                    l8 += 1
+                else:
+                    l1 += 1
+                    l6 += 6
+                    l7 += 7
+            case 4:
+                if xo() == "X":
+                    l2 += 1
+                    l4 += 1
+                else:
+                    l2 -= 1
+                    l4 -= 1
+            case 5:
+                if xo() == "X":
+                    l2 += 1
+                    l5 += 1
+                    l7 += 1
+                else:
+                    l2 -= 1
+                    l5 -= 1
+                    l7 -= 1
+            case 6:
+                if xo() == "X":
+                    l2 += 1
+                    l6 += 1
+                else:
+                    l2 -= 1
+                    l6 -= 1
+            case 7:
+                if xo() == "X":
+                    l3 += 1
+                    l4 += 1
+                    l8 += 1
+                else:
+                    l3 -= 1
+                    l4 -= 1
+                    l8 -= 1
+            case 8:
+                if xo() == "X":
+                    l3 += 1
+                    l5 += 1
+                else:
+                    l3 -= 1
+                    l5 -= 1
+            case 9:
+                if xo() == "X":
+                    l3 += 1
+                    l6 += 1
+                    l7 += 1
+                else:
+                    l3 -= 1
+                    l6 -= 1
+                    l7 -= 1
+        #Verificar se cada uma das variaveis sao iguais a 3(X ganhou na linha) ou -3(O ganhou na linha).
         MudarJogador()
         tabuleiro()
