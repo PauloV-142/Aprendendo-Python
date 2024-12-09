@@ -7,7 +7,7 @@ l6 = 0
 l7 = 0
 l8 = 0
 
-lugares = ["N", "N", "N", "N", "N", "N", "N", "N", "N"]
+lugares = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 ocupados = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 jogador = 1
 def MudarJogador(): # Alterna entre X ou O
@@ -59,11 +59,11 @@ while ocupados != []:
                 if xo() == "X":
                     l1 += 1
                     l6 += 1
-                    l8 += 1
+                    l8 += 1#
                 else:
-                    l1 += 1
-                    l6 += 1
-                    l7 += 7
+                    l1 -= 1
+                    l6 -= 1
+                    l8 -= 1#
             case 4:
                 if xo() == "X":
                     l2 += 1
@@ -119,5 +119,5 @@ while ocupados != []:
         elif l1 == -3 or l2 == -3 or l3 == -3 or l4 == -3 or l5 == -3 or l6 == -3 or l7 == -3 or l8 == -3:
             print("O Ganhou!")
             exit()
-        # print(f"l1:{l1} | l2:{l2} | l3:{l3} | l4:{l4} | l5:{l5} | l6:{l6} | l7:{l7} | l8:{l8}") para debug.
-        MudarJogador()
+        print(f"l1:{l1} | l2:{l2} | l3:{l3} | l4:{l4} | l5:{l5} | l6:{l6} | l7:{l7} | l8:{l8}")
+        MudarJogador()# 2 3 5 7 1
