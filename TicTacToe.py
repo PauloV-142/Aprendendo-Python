@@ -28,6 +28,7 @@ def local():
     return local
 def tabuleiro():
     print(f"{lugares[0]} | {lugares[1]} | {lugares[2]}\n-- --- --\n{lugares[3]} | {lugares[4]} | {lugares[5]}\n-- --- --\n{lugares[6]} | {lugares[7]} | {lugares[8]}")
+tabuleiro()
 while ocupados != []:
     try:
         l = str(local())
@@ -61,7 +62,7 @@ while ocupados != []:
                     l8 += 1
                 else:
                     l1 += 1
-                    l6 += 6
+                    l6 += 1
                     l7 += 7
             case 4:
                 if xo() == "X":
@@ -111,6 +112,12 @@ while ocupados != []:
                     l3 -= 1
                     l6 -= 1
                     l7 -= 1
-        #Verificar se cada uma das variaveis sao iguais a 3(X ganhou na linha) ou -3(O ganhou na linha).
-        MudarJogador()
         tabuleiro()
+        if l1 == 3 or l2 == 3 or l3 == 3 or l4 == 3 or l5 == 3 or l6 == 3 or l7 == 3 or l8 == 3:
+            print("X Ganhou!")
+            exit()
+        elif l1 == -3 or l2 == -3 or l3 == -3 or l4 == -3 or l5 == -3 or l6 == -3 or l7 == -3 or l8 == -3:
+            print("O Ganhou!")
+            exit()
+        # print(f"l1:{l1} | l2:{l2} | l3:{l3} | l4:{l4} | l5:{l5} | l6:{l6} | l7:{l7} | l8:{l8}") para debug.
+        MudarJogador()
