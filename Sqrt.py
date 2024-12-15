@@ -8,7 +8,7 @@ def main():
             guess = r
             r = ((a / guess) + guess)/2
         else:
-            return round(r, 2)
+            return round(r, 3)
     print(Sqrt(n))
     main()
 main()
