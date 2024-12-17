@@ -9,7 +9,7 @@ def main():
     #    print(e)
         a.append(e)
     b = 1
-    c = int(input("Iterations: "))
+    c = int(input("Iterations: ")) + 1
     while b < c:
         b += 1
         time.sleep(0)

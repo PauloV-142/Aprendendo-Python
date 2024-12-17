@@ -16,7 +16,7 @@ def main():
         p = sum / 2
         print(f"O perímetro é: {normalize(sum)}")
         Heron = lambda a, p: sqrt(p * (p - a[0]) * (p - a[1]) *     (p - a[2]))
-        print(normalize(Heron(a, p)))
+        print('A área é: ', normalize(Heron(a, p)))
         if Heron(a, p) == 0:
             print("Não é um triângulo")
     except ValueError as e:
