@@ -16,7 +16,7 @@ plt.plot(xpoints, ypoints, 'o')
 def start():
     x = 0
     y = 0
-    for i in range(50000):
+    for i in range(50000):#Don't be scared, there will be 50 seconds of pure thinking, wait and you'll see!
         r = np.random.randint(3)
         match r:
             case 0:
@@ -28,6 +28,7 @@ def start():
             case 2:
                 x = ((x - c[0])/2) + c[0]
                 y = ((y - c[1])/2) + c[1]
+        print(i)
         printerx = np.array([x])
         printery = np.array([y])
         #print(x, y, r)
