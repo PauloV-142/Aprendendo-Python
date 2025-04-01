@@ -1,4 +1,7 @@
 #Differetial Suffle
+import time
+start = time.time()
+'''
 import math
 print('-'*30)
 letters = ['a','b','c','d']
@@ -27,11 +30,43 @@ for i in range(4**4):
         if neo.count(neo[0]) == 1 and neo.count(neo[1]) == 1 and neo.count(neo[2]) == 1 and neo.count(neo[3]) == 1:
             print(neo) 
             counter += 1
-print(counter)
+print(counter)'
+'''
+def toStr(array):
+    return ''.join(array)
 
 def inffor(array):
     l = len(array)
-    for i in len(l ** l):
-        pass
+    potencias = [0]*l
+    neo = array[:]
+    all = []
+    for i in range(l):
+        potencias[i] = l ** i
 
+    for i in range(l ** l):
+        for j in range(l):
+            neo[j] = letters[(i//potencias[j])%l]
+        if len(set(neo)) == l:
+            all.append(toStr(neo))
+    return all
+letters = ['a','b','c','d']
+reorganizations = inffor(letters)
+print(reorganizations)
+print(len(reorganizations))
+'''
+print('*'*3)
+
+l = len(letters)
+potencias = [0] *l
+neo = letters[:]
+for i in range(l):
+        potencias[i] = l ** i
+
+for i in range(l**l):
+    for j in range(l): #0 | 1 | 2 | 3 
+        neo[j] = letters[(i//potencias[l-j-1])%l]
+    print(neo)
+'''
+end = time.time()
+print(end - start)
 print('-'*30)
