@@ -1,6 +1,6 @@
 def main():
-    index = int(input("Digite o índice: "))
-    radicand = float(input("Radical: "))
+    index = int(input("Digite o índice da Raiz: "))
+    radicand = float(input("Digite o Radicando: "))
     precision = 20
     root = 0
     counter = 0
@@ -16,7 +16,7 @@ def main():
                 decroot[i+1] = decroot[i] + j/10**i
                 if decroot[i+1] ** index > radicand:
                     break
-            decroot[i+1] -= 1/10**i
+            decroot[i+1] -= round(1/10**i,i)
             print(decroot[i+1])    
     main()
 main()    
