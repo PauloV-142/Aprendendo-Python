@@ -23,8 +23,16 @@ legenda.pack()#No centro do topo como um título
 #legenda.place(x=int(input('X=')),
 #              y=int(input('Y=')))#Coordenadas
 '''
+state = 0
 def click():
-    print('oi')
-botão = Button(janela, text='Click!!!!')
+    global state
+    if state == 0:
+        botão.config(text='Clique!!!!', font=('Mono',10,'bold'), bg=('#999900'), fg='#ffcc00')
+        state = 1
+    elif state == 1:
+        botão.config(text='Click!!!!', font=('Arial',10,'bold'), bg=('#009999'), fg='#ffcc00')
+        state = 0
+botão = Button(janela, command=click)
+click()
 botão.pack()
 janela.mainloop()#Inicia uma janela na tela e executa enventos
