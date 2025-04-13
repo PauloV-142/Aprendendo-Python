@@ -19,7 +19,7 @@ def impar(array):
     return c        
 Layer = [1]
 NextLayer = []
-print(🟩)
+print('🟩')
 for i in range(50):
     counter = 0
     for i in Layer:

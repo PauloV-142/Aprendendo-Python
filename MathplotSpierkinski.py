@@ -1,3 +1,9 @@
+'''
+  WARNING: The scripts f2py and numpy-config are installed in '/var/data/python/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The scripts fonttools, pyftmerge, pyftsubset and ttx are installed in '/var/data/python/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.v
+'''
 import matplotlib.pyplot as plt
 import numpy as np
 def inputx():
@@ -28,7 +34,7 @@ def start():
             case 2:
                 x = ((x - c[0])/2) + c[0]
                 y = ((y - c[1])/2) + c[1]
-        print(i)
+                print(i)
         printerx = np.array([x])
         printery = np.array([y])
         #print(x, y, r)

@@ -1,4 +1,4 @@
-import turtle
+from turtle import *
 import time
 bob = turtle.Turtle()
 bob.color('green', 'yellow')
