@@ -112,7 +112,9 @@ def enable_all_buttons():
     global l_scores, ocupados, jogador
     l_scores = [0] * 8
     ocupados = set()
-    jogador = 1
+    # Alterna o jogador inicial com base no total de pontos e empates.
+    # Se a soma for ímpar, o jogador inicial será "O" (2). Caso contrário, será "X" (1).
+    jogador = 2 if (pontosx + pontoso + empates) % 2 == 1 else 1 #Gut
     for button in buttons.values():
         button.config(image='', bg='#99ccff', state=ACTIVE, height=5, width=10)
 
