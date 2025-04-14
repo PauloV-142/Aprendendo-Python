@@ -1,14 +1,15 @@
 def main():
     def normalize(b):
-            if round(b) == b:
+            if int(b) == b:
                 return int(b)
             else:
                 return b
     def divisores(a):
-        Lista = [1]
-        for i in range(a) :
-            if a / (i + 1) == round(a / (i + 1)):
+        Lista = []
+        for i in range(1,a):
+            if a / (i) == round(a / (i)):
                 Lista.append(i)
+        Lista.append(a)
         return Lista
     
     n1 = int(input("Encontre os divisores de: "))
