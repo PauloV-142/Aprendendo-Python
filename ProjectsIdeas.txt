@@ -1,0 +1,29 @@
+#Find where x^n = Y^m.
+    -As C and Y;
+    -As n != m;
+    -And every number owns to integers.
+    ex: 2⁴ =4³ = 8² = 64
+        9³ = 27² = 729
+
+#Find the matrices created given a determinant N and one value of Aij:
+    (a b c)
+A = (d e f) <=> det A = N
+    (g h i)
+X = Aij => det A = N
+
+#always prime:
+<-
+7
+37
+537
+7537...
+There are finitely many of them, find them all!
+
+#Solve for a, b and c. They are algarisms different from zero.
+
+ab
+*c
+===
+aaa
+
+add a+b+c on the end to get the result.
