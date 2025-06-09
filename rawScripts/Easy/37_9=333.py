@@ -1,5 +1,5 @@
-# you have a b c, they are all algarisms different from zero.
-# when you do ab * c what. values will give you 'aaa' 3 times that algarism?
+# you have a b c, they are all digits different from zero.
+# when you do ab * c, what values will give you aaa? (3 times the digit a)
 
 def test(a, b, c):
     ab = int(str(a) + str(b))
@@ -13,5 +13,5 @@ for a in range(1,10):
     for b in range(1,10):
         for c in range(1,10):
             test(a,b,c)
-# we could guess a 3 digit number, and then factor it ourselves ;-;
+# during the test... We could've guessed a number with 3 equal digits, and then factor it by ourselves ;-;, is there another way to reach the correct answer without guessing it?
 # 37*9=333, True!!!!!           
