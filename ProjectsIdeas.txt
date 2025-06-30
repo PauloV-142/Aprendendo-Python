@@ -27,3 +27,8 @@ ab
 aaa
 
 add a+b+c on the end to get the result.
+
+
+#A working Sudoku, Good luck
+-Also, add a bot to solve it.
+--Do it in Tkinter
