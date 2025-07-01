@@ -10,6 +10,7 @@ def gerar():
         #matrix.append(random.choices(linha, k=9))
         matrix.append([""]*9)
     return matrix
+tabuleiro = gerar()
 
 def mostrarTabuleiro(matrix):
     '''Mostra o tabuleiro de uma maneira agradável.'''
@@ -19,13 +20,12 @@ def mostrarTabuleiro(matrix):
         print()
         print()
 
-
 def verificar(matrix): #Entenda se conseguir
-    '''Verifica e retorna uma lista com todas as cordenadas dos valores errados.'''
+    '''Verifica e retorna uma lista com todas as cordenadas dos valores em conflito.'''
     erros = []
     for linha in matrix:
         for i in range(9):
-            if linha[i] in range(1,9):
+            if linha[i] in list(range(9)):
                 if linha.count(linha[i]) > 1:
                     erros.append([matrix.index(linha),i])
     return erros
@@ -41,12 +41,16 @@ def girar(matrix):
     return matrixColunas
 
 def mostrarErros(matrix, erros):
-    '''Percorre a lista de cordenadas dos valores errados e os colore de verde.'''
-    for item in erros:
-        matrix[item[0]][item[1]] = f"\033[32m{matrix[item[0]][item[1]]}\033[0m"
-    return matrix
+    '''Percorre a lista de cordenadas dos valores errados e os colore.'''
+    for l, linha in enumerate(matrix):
+        for i, item in enumerate(linha):
+            if [l,i] in erros:
+                tabuleiroBotoes[l][i].config(background="#9d8bff")
+            else:
+                tabuleiroBotoes[l][i].config(background='#99ccff')
 
 def limpar(lista):
+    '''Remove quaisquer itens repetidos.'''
     nLista = []
     for i in lista:
         if not i in nLista:
@@ -57,10 +61,11 @@ def inserir(linha, coluna):
     tabuleiroBotoes[linha][coluna].config(text=numeroSelecionado)
     tabuleiro[linha][coluna] = numeroSelecionado
     mostrarTabuleiro(tabuleiro)
+    mostrarErros(tabuleiro, verificar(tabuleiro))
 
 def selecionarNumero(linha):
     global numeroSelecionado
-    numeroSelecionado = linha
+    numeroSelecionado = linha if linha != 0 else ''
     print(numeroSelecionado)
 
 def Ui():
@@ -75,25 +80,20 @@ def Ui():
             tabuleiroBotoesLinha.append(botao)
         tabuleiroBotoes.append(tabuleiroBotoesLinha)
         
-    for i in range(9):
+    for i in range(10):
         algarismos = []
-        algarismo = tk.Button(root, bg="#3bffde", activebackground="#3be2ff", height=2, width=4,text=i+1, command=lambda linha=i+1: selecionarNumero(linha))
+        algarismo = tk.Button(root, bg="#3bffde", activebackground="#3be2ff", height=2, width=4,text=i if i != 0 else '', command=lambda linha=i: selecionarNumero(linha))
         algarismo.grid(row=i,column=10)
         algarismos.append(algarismo)
 
 numeroSelecionado = ''
-
-tabuleiro = gerar()
 mostrarTabuleiro(tabuleiro)
-
 root = tk.Tk()
 root.title('Python Sudoku v1')
 root.config(background='#305f6f')#RRGGBB
 root.geometry('500x500')
 Ui()
 
-
-        
 root.mainloop()
 
 print('-'*30)
