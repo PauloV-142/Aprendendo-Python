@@ -20,35 +20,52 @@ def mostrarTabuleiro(matrix):
         print()
         print()
 
-def verificar(matrix): #Entenda se conseguir
-    '''Verifica e retorna uma lista com todas as cordenadas dos valores em conflito.'''
-    erros = []
-    for linha in matrix:
-        for i in range(9):
-            if linha[i] in list(range(9)):
-                if linha.count(linha[i]) > 1:
-                    erros.append([matrix.index(linha),i])
-    return erros
-
 def girar(matrix):
     '''Faz as colunas virarem linhas para que possam ser verificadas como tal.'''
     matrixColunas = []
-    for indice in range(9):
+    for indice in range(len(matrix)):
         coluna = []
         for linha in matrix:
             coluna.append(linha[indice])
         matrixColunas.append(coluna)
     return matrixColunas
 
-def mostrarErros(matrix, erros):
-    '''Percorre a lista de cordenadas dos valores errados e os colore.'''
-    for l, linha in enumerate(matrix):
-        for i, item in enumerate(linha):
-            if [l,i] in erros:
-                tabuleiroBotoes[l][i].config(background="#9d8bff")
-            else:
-                tabuleiroBotoes[l][i].config(background='#99ccff')
+def verificarLinha(matrix):
+    '''Verifica e retorna uma lista com todas as cordenadas dos valores em conflito.'''
+    conflitos = []
+    for vez in range(2):
+        for l, linha in enumerate(matrix):
+            for valor in linha:
+                if valor != '' and linha.count(valor) > 1:
+                    for i, item in enumerate(linha):
+                        if item == valor:
+                            match vez:
+                                case 0:
+                                    if [l,i] not in conflitos:
+                                        conflitos.append([l,i])
+                                case 1:
+                                    if [i,l] not in conflitos:
+                                        conflitos.append([i,l])
+        matrix = girar(matrix)
 
+    return conflitos
+
+def verificarTudo(matrix):
+    '''Aplica o método de verificar linha, coluna e célula e retorna os lugares com erro.'''
+    erros = verificarLinha(matrix)
+    print(len(erros))
+    erros = limpar(erros)
+    print(len(erros))
+    return erros
+
+def mostrarConflitos(matrix, conflitos):
+    '''Percorre a lista de cordenadas dos valores errados e os colore.'''
+    for l in range(9):
+        for i in range(9):
+            if (l, i) in conflitos or [l, i] in conflitos:
+                tabuleiroBotoes[l][i].config(foreground="#ff0a0a")
+            else:
+                tabuleiroBotoes[l][i].config(foreground="#000000")
 def limpar(lista):
     '''Remove quaisquer itens repetidos.'''
     nLista = []
@@ -61,7 +78,7 @@ def inserir(linha, coluna):
     tabuleiroBotoes[linha][coluna].config(text=numeroSelecionado)
     tabuleiro[linha][coluna] = numeroSelecionado
     mostrarTabuleiro(tabuleiro)
-    mostrarErros(tabuleiro, verificar(tabuleiro))
+    mostrarConflitos(tabuleiro, verificarTudo(tabuleiro))
 
 def selecionarNumero(linha):
     global numeroSelecionado
