@@ -1,4 +1,5 @@
 import random
+from Sudoku import mostrarTabuleiro
 def gerar():
     '''Gera todo o tabuleiro com números aleatórios, por enquanto.'''
     matrix = []
@@ -8,13 +9,13 @@ def gerar():
         #matrix.append([""]*9)
     return matrix
 
-def mostrarTabuleiro(matrix):
-    '''Mostra o tabuleiro de uma maneira agradável.'''
-    for linha in matrix:
-        for item in linha:
-            print(item, ' ', end= ' ')
-        print()
-        print()
+# def mostrarTabuleiro(matrix):
+#     '''Mostra o tabuleiro de uma maneira agradável.'''
+#     for linha in matrix:
+#         for item in linha:
+#             print(item, ' ', end= ' ')
+#         print()
+#         print()
 
 def celula(n): # How delightful! And Scary!
     '''Retorna uma lista com as cordenadas de cada valor da célula.'''
@@ -26,7 +27,8 @@ def celula(n): # How delightful! And Scary!
             celula.append([linha, item])
     return celula
 
-def mostrarConflitos(matrix):
+def verificar(matrix):
+    conflitos = []
     for p in range(9):
         cell = celula(p)
         cellVal = []
@@ -35,11 +37,19 @@ def mostrarConflitos(matrix):
         for i, val in enumerate(cellVal):
             if cellVal.count(val) > 1:
                 coord = cell[i]
-                matrix[coord[0]][coord[1]] = f"\033[32m{matrix[coord[0]][coord[1]]}\033[0m"
+                conflitos.append([coord[0],coord[1]])
+    return conflitos
+
+def aplicar(matrix, erros):
+    for i in erros:
+        matrix[i[0]][i[1]] = f"\033[32m{matrix[i[0]][i[1]]}\033[0m"
     return matrix
 
 tabuleiro = gerar()
 
 print('-'*33)
-
-mostrarTabuleiro(mostrarConflitos(tabuleiro))
+conflitos = verificar(tabuleiro)
+mostrarTabuleiro(tabuleiro)
+print('='*33)
+mostrarTabuleiro(aplicar(tabuleiro, conflitos))
+print(len(conflitos))
