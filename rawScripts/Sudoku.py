@@ -71,28 +71,20 @@ def verificar(matrix): # Dligthful but scary!
                 coord = cell[i]
                 conflitos.append([coord[0],coord[1]])
 
-    return conflitos
-
-def verificarTudo(matrix):
-    '''Aplica o método de verificar linha e coluna e retorna os lugares com erro.'''
-    erros = verificar(matrix)
-    # print(len(erros), erros)
-    # erros = limpar(erros)
-    # print(len(erros), erros)
+    # Verificar Vitória
     completo = True
     for i in matrix:
         if ' ' in i:
             completo = False
             break
-        
-    if (len(erros) == 0) and completo:
+    if (len(conflitos) == 0) and completo:
         print('Você ganhou o Sudoku!\nModo Sandbox')
-    print(erros)
-    print(len(erros))
-    # print(matrix)
-    # print()
+
+    # Debug
+    print(conflitos)
+    print(len(conflitos))
     
-    return erros
+    return conflitos
 
 def mostrarConflitos(matrix, conflitos):
     '''Percorre a lista de cordenadas dos valores errados e os colore.'''
@@ -115,7 +107,7 @@ def inserir(linha, coluna):
     tabuleiroBotoes[linha][coluna].config(text=numeroSelecionado)
     tabuleiro[linha][coluna] = numeroSelecionado
     mostrarTabuleiro(tabuleiro)
-    mostrarConflitos(tabuleiro, verificarTudo(tabuleiro))
+    mostrarConflitos(tabuleiro, verificar(tabuleiro))
 
 def selecionarNumero(linha):
     global numeroSelecionado
@@ -142,16 +134,17 @@ def Ui():
 
 def iniciar():
     global tabuleiro, root, numeroSelecionado
-    print('\033[1m-'*30,'\033[0m')
+    print('-'*30)
     tabuleiro = gerar()
     numeroSelecionado = ''
+    print(tabuleiro)
     #mostrarTabuleiro(tabuleiro)
     root = tk.Tk()
     root.title('Python Sudoku v1')
     root.config(background='#305f6f')#RRGGBB
     root.geometry('500x500')
     Ui()
-    mostrarConflitos(tabuleiro, verificarTudo(tabuleiro))
+    mostrarConflitos(tabuleiro, verificar(tabuleiro))
 
     root.mainloop()
 
