@@ -22,7 +22,7 @@ plt.plot(xpoints, ypoints, 'o')
 def start():
     x = 0
     y = 0
-    for i in range(50000):#Don't be scared, there will be 50 seconds of pure thinking, wait and you'll see!
+    for i in range(25000):#Don't be scared, there will be 50/2 seconds of pure thinking, wait and you'll see!
         r = np.random.randint(3)
         match r:
             case 0:

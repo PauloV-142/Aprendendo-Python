@@ -6,19 +6,21 @@ def gerar():
     '''Gera todo o tabuleiro com números aleatórios, por enquanto.'''
     matrix = []
     for i in range(9):
-        #linha = list(range(1,9))
-        #matrix.append(random.choices(linha, k=9))
-        matrix.append([" "]*9)
+        linha = [' ']+list(range(1,9))
+        peso = [20]+([1]*8)
+        #print('Pe',peso)
+        matrix.append(random.choices(linha, weights=peso,k=9))
+        #matrix.append([" "]*9)
+    # matrix = [[9, 8, 7, ' ', 3, 2, 6, 5, 4], [6, 5, 4, 9, 8, 7, ' ', 3, 2], [' ', 3, 2, 6, 5, 4, 9, 8, 7], [7, 9, 8, 2, ' ', 3, 4, 6, 5], [4, 6, 5, 7, 9, 8, 2, ' ', 3], [2, ' ', 3, 4, 6, 5, 7, 9, 8], [8, 7, 9, 3, 2, ' ', 5, 4, 6], [5, 4, 6, 8, 7, 9, 3, ' ', ' '], [3, 2, ' ', 5, 4, 6, 8, 7, 9]]
     return matrix
-
 
 def mostrarTabuleiro(matrix):
     '''Mostra o tabuleiro de uma maneira agradável.'''
     for linha in matrix:
         for item in linha:
-            print(item, '', end= ' ')
+            print(item, '', end= '')
         print()
-        print()
+        # print()
 
 def girar(matrix):
     '''Faz as colunas virarem linhas para que possam ser verificadas como tal.'''
@@ -44,9 +46,10 @@ def verificar(matrix): # Dligthful but scary!
     '''Verifica e retorna uma lista com todas as cordenadas dos valores em conflito.'''
     conflitos = []
     for vez in range(2):
+
         for l, linha in enumerate(matrix):
             for valor in linha:
-                if valor != '' and linha.count(valor) > 1:
+                if valor != ' ' and linha.count(valor) > 1:
                     for i, item in enumerate(linha):
                         if item == valor:
                             match vez:
@@ -64,9 +67,10 @@ def verificar(matrix): # Dligthful but scary!
         for i in cell:
             cellVal.append(matrix[i[0]][i[1]])
         for i, val in enumerate(cellVal):
-            if cellVal.count(val) > 1 and cell[i] not in conflitos and val != '':
+            if cellVal.count(val) > 1 and cell[i] not in conflitos and val != ' ':
                 coord = cell[i]
                 conflitos.append([coord[0],coord[1]])
+
     return conflitos
 
 def verificarTudo(matrix):
@@ -75,8 +79,19 @@ def verificarTudo(matrix):
     # print(len(erros), erros)
     # erros = limpar(erros)
     # print(len(erros), erros)
-    if (not ' ' in matrix) and (len(erros) == 0):
+    completo = True
+    for i in matrix:
+        if ' ' in i:
+            completo = False
+            break
+        
+    if (len(erros) == 0) and completo:
         print('Você ganhou o Sudoku!\nModo Sandbox')
+    print(erros)
+    print(len(erros))
+    # print(matrix)
+    # print()
+    
     return erros
 
 def mostrarConflitos(matrix, conflitos):
@@ -104,7 +119,7 @@ def inserir(linha, coluna):
 
 def selecionarNumero(linha):
     global numeroSelecionado
-    numeroSelecionado = linha if linha != 0 else ''
+    numeroSelecionado = linha if linha != 0 else ' '
     print(numeroSelecionado)
 
 def Ui():
@@ -125,19 +140,23 @@ def Ui():
         algarismo.grid(row=i,column=10)
         algarismos.append(algarismo)
 
-if __name__ == '__main__':
-    print('In Main script!')
-    print('\033[0m-'*30)
+def iniciar():
+    global tabuleiro, root, numeroSelecionado
+    print('\033[1m-'*30,'\033[0m')
     tabuleiro = gerar()
-
     numeroSelecionado = ''
-    mostrarTabuleiro(tabuleiro)
+    #mostrarTabuleiro(tabuleiro)
     root = tk.Tk()
     root.title('Python Sudoku v1')
     root.config(background='#305f6f')#RRGGBB
     root.geometry('500x500')
     Ui()
+    mostrarConflitos(tabuleiro, verificarTudo(tabuleiro))
 
     root.mainloop()
 
     print('-'*30)
+
+if __name__ == '__main__':
+    print('In Main script!')
+    iniciar()
