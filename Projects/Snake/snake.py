@@ -1,15 +1,3 @@
-import termios
-import tty
-import sys
-
-def get_input() -> str:
-  
-    filedescriptors = termios.tcgetattr(sys.stdin)
-    tty.setcbreak(sys.stdin)
-    key = sys.stdin.read(1)[0]
-    termios.tcsetattr(sys.stdin, termios.TCSADRAIN,filedescriptors)
-    return key
-
 # Snake 0 ☠️
 
 """
@@ -43,13 +31,21 @@ To create a NEW snake tail block:
 2 player game ☠☠☠
 """
 
+"""
+TODO:
+Recursive tail direction changing.
+Keyboard movement.
+Food mechanics.
+Game over.
+"""
+
 def str_rep(string, index, char):
     return string[0:index - 1] + char + string[index:-1]
 
 class Board:
-    def __init__(self, w=37, h=10):
+    def __init__(self, w=40, h=40):
         self.w, self.h = w, h
-        # self.board = self.new_board()
+        self.board = self.new_board()
         self.snake = Snake((2, 0), (1, 0))
         self.food = ...
         
@@ -57,21 +53,18 @@ class Board:
         return [["."] * self.w] * self.h
         
     def render(self):
-        # Performance: use strings for
-        # empty lines and lists for others.
-        # IF x index out of range:
+        # Performance: use strings for empty lines, and lists for used ones.
+        # if INDEX out of range:
         #   Game over or reappear in the opposite side
+        self.board = self.new_board()
         for sprite in self.snake.body:
             x, y = sprite.pos
-            #y = sprite.pos[1]
-            row = self.new_board()[y]
+            row = self.board[y].copy()
             row[x] = "@"
             self.board[y] = row
-        #x, y = self.snake.tail.pos
-        # y = self.snake.tail.pos[1]
-        #row = self.board[y]
-        #self.board[y] = str_rep(row, x, "·")    
-        
+            sprite.direction = random.choice(Sprite.direct)
+
+
     def tick(self):
         """Update the snake recursively.
         Verify if SNAKE HEAD and FOOD
@@ -87,26 +80,21 @@ class Board:
     def __str__(self):
         board = []
         for row in self.board:
-            board.append("".join(row))    
-        return "".join(board)
-
-class direction:
-    right = (1, 0)
-    left = (-1, 0)
-    up = (0, 1)
-    down = (0, -1)
+            board.append("".join(row))
+        return "\n".join(board)
 
 class Snake:
-    def __init__(self, *args:tuple):
-        self.body = list(map(Sprite.tuple_init, args))
+    def __init__(self, *body):
+        self.body = list(map(Sprite.tuple_init, body))
         self.head = self.body[1]
         self.tail = self.body[-1]
-        print("snake", self)
     
     def grow(self):
         # tail = self.body[-1]
         # Add a new sprite to the tail
-        self.body.append(Sprite(self.tail.sub(tail.direction)))
+        self.body.append(
+            Sprite.tuple_init(self.tail.behind())
+            )
         self.tail = self.body[-1]
 
     def walk(self):
@@ -136,17 +124,30 @@ class Food():
     def teleport():
         ...
 
+class direction:
+    right = (1, 0)
+    left = (-1, 0)
+    up = (0, 1)
+    down = (0, -1)
+
 class Sprite:
+    d = direction
+    direct = [d.right, d.left, d.up, d.down]
+
     def __init__(self, x, y):
         self.pos = (x, y)
-        self.direction = direction.right
+        self.direction = direction.down
     
-    def tuple_init(pos):
+    def tuple_init(pos:tuple) -> Sprite:
         return Sprite(pos[0], pos[1])
         
     def walk(self):    
         self.pos = self.add(self.direction)
-        
+    
+    def behind(self):
+        """Get the coords of the block behind this sprite, based on it's direction of movement."""
+        return self.sub(self.direction)
+
     def add(self, pair):
         "Add an ordenated Pair to another"
         x = self.pos[0] + pair[0] # Ax + Bx
@@ -159,15 +160,18 @@ class Sprite:
         y = self.pos[1] - pair[1] # Ay - By
         return (x, y)
 
-def findFreeRandomPos(boardSize, sprites):
+def findFreeRandomPoints(boardSize, sprites):
     "Only use FREE points."
     ...
     
-import time    
-a = Board()
+import time
+import random
+a = Board(w=40, h=40)
 print(a)
 while True:
-    time.sleep(1)
-    print("-"* 37)
+    time.sleep(0.2)
+    print("=" * a.w)
+    if random.randint(0, 4):
+        a.snake.grow()
     a.tick()
     print(a)
