@@ -5,12 +5,10 @@ import tkinter as tk
 def gerar():
     '''Gera todo o tabuleiro com números aleatórios, por enquanto.'''
     matrix = []
+    linha = [' '] + list(range(1,9))
     for i in range(9):
-        linha = [' ']+list(range(1,9))
-        peso = [20]+([1]*8)
-        #print('Pe',peso)
+        peso = [20] + ([1] * 8)
         matrix.append(random.choices(linha, weights=peso,k=9))
-        #matrix.append([" "]*9)
     # matrix = [[9, 8, 7, ' ', 3, 2, 6, 5, 4], [6, 5, 4, 9, 8, 7, ' ', 3, 2], [' ', 3, 2, 6, 5, 4, 9, 8, 7], [7, 9, 8, 2, ' ', 3, 4, 6, 5], [4, 6, 5, 7, 9, 8, 2, ' ', 3], [2, ' ', 3, 4, 6, 5, 7, 9, 8], [8, 7, 9, 3, 2, ' ', 5, 4, 6], [5, 4, 6, 8, 7, 9, 3, ' ', ' '], [3, 2, ' ', 5, 4, 6, 8, 7, 9]]
     return matrix
 
@@ -20,15 +18,14 @@ def mostrarTabuleiro(matrix):
         for item in linha:
             print(item, '', end= '')
         print()
-        # print()
 
 def girar(matrix):
     '''Faz as colunas virarem linhas para que possam ser verificadas como tal.'''
     matrixColunas = []
-    for indice in range(len(matrix)):
+    for i in range(len(matrix)):
         coluna = []
         for linha in matrix:
-            coluna.append(linha[indice])
+            coluna.append(linha[i])
         matrixColunas.append(coluna)
     return matrixColunas
 
