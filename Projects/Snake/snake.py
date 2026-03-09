@@ -29,6 +29,9 @@ To create a NEW snake tail block:
     # Because it is one block behind :)
 
 2 player game ☠☠☠
+Snake roguelike:
+- Enemies that move.
+- Expandable board.
 """
 
 """
@@ -37,6 +40,12 @@ Recursive tail direction changing.
 Keyboard movement.
 Food mechanics.
 Game over.
+
+Rules system:
+board.rules["onTouchingWall"] = (teleport | game_over)
+board.rules["onTouchingBody"] = (continue | game_over)
+board.rules["doSpeedIncrease"] = (True | False)
+...
 """
 
 def str_rep(string, index, char):
