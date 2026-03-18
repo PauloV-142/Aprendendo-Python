@@ -29,27 +29,30 @@ To create a NEW snake tail block:
     # Because it is one block behind :)
 
 2 player game ☠☠☠
-Snake roguelike:
-- Enemies that move.
-- Expandable board.
 """
 
 """
 TODO:
 Recursive tail direction changing.
 Keyboard movement.
-Food mechanics.
+Food mechanics. (Food array for various)
 Game over.
-
-Rules system:
-board.rules["onTouchingWall"] = (teleport | game_over)
-board.rules["onTouchingBody"] = (continue | game_over)
-board.rules["doSpeedIncrease"] = (True | False)
-...
 """
 
-def str_rep(string, index, char):
-    return string[0:index - 1] + char + string[index:-1]
+"""
+Settings
+
+# Change time.sleep inside board.mainloop()
+board.tickSpeed = 0.2s
+"""
+
+"""
+Ideas
+
+# Multiplayer
+Add an array for board.snakes
+Multiple keyListeners at each second
+"""
 
 class Board:
     def __init__(self, w=40, h=40):
@@ -57,6 +60,7 @@ class Board:
         self.board = self.new_board()
         self.snake = Snake((2, 0), (1, 0))
         self.food = ...
+        self.keyPressed = ""
         
     def new_board(self):
         return [["."] * self.w] * self.h
@@ -65,13 +69,15 @@ class Board:
         # Performance: use strings for empty lines, and lists for used ones.
         # if INDEX out of range:
         #   Game over or reappear in the opposite side
+        
+        # Get a new board, so the symbols can be drawn
         self.board = self.new_board()
         for sprite in self.snake.body:
             x, y = sprite.pos
             row = self.board[y].copy()
             row[x] = "@"
             self.board[y] = row
-            sprite.direction = random.choice(Sprite.direct)
+            sprite.direction = direction.right
 
 
     def tick(self):
@@ -85,8 +91,20 @@ class Board:
         self.snake.walk()
         self.render()
         
+    def mainloop(self):
+        print(a)
+        while True:
+            time.sleep(0.2)
+            print("=" * a.w)
+            # Use async/subroutine, so the game doesn't wait for the key
+            
+            # Listen to Input
+            self.keyPressed = get_input()
+            self.tick()
+            print(self)
         
     def __str__(self):
+        "PERFORMANCE find a faster way."
         board = []
         for row in self.board:
             board.append("".join(row))
@@ -110,6 +128,18 @@ class Snake:
         self.update_head_tail()
         for block in self.body:
             block.walk()
+            
+    def turn(self, direction, n=0):
+        """Update the sprites's directions recursively.
+        n is the member 0 = head"""
+        
+        # TODO
+        self.body[n].direction = direction
+        
+        # In the next tick
+        self.walk(direction, n + 1)
+        return n + 1
+        ...
         
     def isTouchingFood(self, food):
         return self.head.pos == food
@@ -138,6 +168,13 @@ class direction:
     left = (-1, 0)
     up = (0, 1)
     down = (0, -1)
+    
+keys = {
+    "d": direction.right,
+    "a": direction.left,
+    "w": direction.up,
+    "s": direction.down
+}    
 
 class Sprite:
     d = direction
@@ -147,7 +184,7 @@ class Sprite:
         self.pos = (x, y)
         self.direction = direction.down
     
-    def tuple_init(pos:tuple) -> Sprite:
+    def tuple_init(pos):
         return Sprite(pos[0], pos[1])
         
     def walk(self):    
@@ -172,15 +209,20 @@ class Sprite:
 def findFreeRandomPoints(boardSize, sprites):
     "Only use FREE points."
     ...
+
+import termios
+import tty
+import sys
+
+def get_input() -> str:
+    filedescriptors = termios.tcgetattr(sys.stdin)
+    tty.setcbreak(sys.stdin)
+    key = sys.stdin.read(1)[0]
+    termios.tcsetattr(sys.stdin, termios.TCSADRAIN,filedescriptors)
     
+    return key
+
 import time
 import random
-a = Board(w=40, h=40)
-print(a)
-while True:
-    time.sleep(0.2)
-    print("=" * a.w)
-    if random.randint(0, 4):
-        a.snake.grow()
-    a.tick()
-    print(a)
+a = Board(w=37, h=16)
+a.mainloop()

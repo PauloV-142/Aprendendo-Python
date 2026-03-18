@@ -4,7 +4,7 @@ import instant_input
 def add10():
     arr = "0123456789"
     count = 0
-    key = input("Press Enter to add new chars.\nOr type the number where the line ends.\n")
+    key = input("Press Any Key to add new chars until the line ends.\nOr type the number where the line ends.\n")
     while True:
         if key not in list(arr):
             print(arr, flush=True, end="")

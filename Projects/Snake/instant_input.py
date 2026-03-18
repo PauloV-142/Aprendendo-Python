@@ -9,3 +9,10 @@ def get_input() -> str:
     termios.tcsetattr(sys.stdin, termios.TCSADRAIN,filedescriptors)
     
     return key
+
+if __name__ == "__main__":
+    inputs = []
+    for i in range(1, 6):
+        inputs.append(get_input())
+        print(i, flush=True, end=" ")
+    print("\nend:", inputs)
