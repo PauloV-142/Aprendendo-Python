@@ -33,7 +33,7 @@ To create a NEW snake tail block:
 
 """
 TODO:
-Recursive tail direction changing.
+List based tail direction changing.
 Keyboard movement.
 Food mechanics. (Food array for various)
 Game over.
@@ -113,36 +113,27 @@ class Board:
 class Snake:
     def __init__(self, *body):
         self.body = list(map(Sprite.tuple_init, body))
-        self.head = self.body[1]
-        self.tail = self.body[-1]
+        self.turning = [(0, 0)] * len(body)
     
     def grow(self):
         # tail = self.body[-1]
         # Add a new sprite to the tail
         self.body.append(
-            Sprite.tuple_init(self.tail.behind())
+            Sprite.tuple_init(self.body[-1].behind())
             )
-        self.tail = self.body[-1]
 
     def walk(self):
-        self.update_head_tail()
-        for block in self.body:
-            block.walk()
+        for sprite in self.body:
+            sprite.walk()
             
-    def turn(self, direction, n=0):
-        """Update the sprites's directions recursively.
-        n is the member 0 = head"""
-        
-        # TODO
-        self.body[n].direction = direction
-        
-        # In the next tick
-        self.walk(direction, n + 1)
-        return n + 1
-        ...
+    def turn(self, direction):
+        self.turning.insert(0, direction)
+        l = len(self.body)
+        for i in range(l):
+            self.body[i].direction = self.turning[i] 
         
     def isTouchingFood(self, food):
-        return self.head.pos == food
+        return self.body[0].pos == food.pos
             
     def isHittingWall(self, boardSize):
         """Return true if walking into wall.
@@ -171,18 +162,16 @@ class direction:
     
 keys = {
     "d": direction.right,
-    "a": direction.left,
-    "w": direction.up,
-    "s": direction.down
+    "a": direction.left
 }    
 
 class Sprite:
-    d = direction
-    direct = [d.right, d.left, d.up, d.down]
+    """SpriteAPI: The basic building
+    blocks for py gaming."""
 
     def __init__(self, x, y):
         self.pos = (x, y)
-        self.direction = direction.down
+        self.direction = direction.right
     
     def tuple_init(pos):
         return Sprite(pos[0], pos[1])
@@ -193,6 +182,9 @@ class Sprite:
     def behind(self):
         """Get the coords of the block behind this sprite, based on it's direction of movement."""
         return self.sub(self.direction)
+    
+    # def turn(self, d):
+    #    self.direction = direction.d
 
     def add(self, pair):
         "Add an ordenated Pair to another"
@@ -206,8 +198,8 @@ class Sprite:
         y = self.pos[1] - pair[1] # Ay - By
         return (x, y)
 
-def findFreeRandomPoints(boardSize, sprites):
-    "Only use FREE points."
+def findFreeRandomCoords(boardSize, sprites):
+    "Only use FREE squares."
     ...
 
 import termios
